@@ -4,12 +4,15 @@ alias home="cd ~"
 alias oa="open ~/.aliases"
 alias sz="source ~/.zshrc"
 
+# Linting
+alias lint="npx eslint --fix"
+
 # Git branches
 alias gitc="git checkout"
 alias gitcm="git checkout main"
 alias gitb="git branch"
 alias gitbd="git branch -D"
-alias gitbc="git checkout -b"
+alias gitcb="git checkout -b"
 alias gitr="git reset"
 alias gitrh="git reset --hard"
 
@@ -19,8 +22,8 @@ alias gitrc="git rebase --continue"
 alias gitl="git log"
 
 # Git changes
-alias gpull="git pull"
-alias gpullm="git checkout main && git pull" 
+alias gitp="git pull"
+alias gitpm="git checkout main && git pull" 
 
 alias gs="git status"
 alias ga="git add"
