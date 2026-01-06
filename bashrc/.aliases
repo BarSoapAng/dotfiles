@@ -1,0 +1,35 @@
+# Navigation
+alias b="cd .."
+alias home="cd ~"
+alias oa="notepad ~/.aliases"
+alias sz="source ~/.bashrc"
+
+# Linting
+alias lint="npx eslint --fix"
+
+# Git branches
+alias gitc="git checkout"
+alias gitcm="git checkout main"
+alias gitb="git branch"
+alias gitbd="git branch -D"
+alias gitcb="git checkout -b"
+alias gitr="git reset"
+alias gitrh="git reset --hard"
+alias gitrm="git rebase main"
+alias gitrc="git rebase --continue"
+alias gitl="git log"
+
+# Git changes
+alias gitp="git pull"
+alias gitpm="git checkout main && git pull"
+alias gs="git status"
+alias ga="git add"
+alias gaa="git add ."
+alias grs="git restore --staged"
+alias gc="git commit -m"
+alias gac="git commit -am"
+alias gaac="git add . && git commit -m"
+function gp () {
+    git push origin $(git branch --show-current) "$@"
+}
+alias gpf="gp --force-with-lease"
