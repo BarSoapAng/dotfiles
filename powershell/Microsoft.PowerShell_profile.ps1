@@ -12,13 +12,13 @@ function lint { npx eslint --fix $args }
 
 # Git branches
 function gitc { git checkout $args }
-function gitcm { git checkout main }
+function gitcm { git checkout ((git symbolic-ref "refs/remotes/$($script:remote ?? 'origin')/HEAD" 2>$null) -replace '^.*/', '') }
 function gitb { git branch }
 function gitbd { git branch -D $args }
 function gitcb { git checkout -b $args }
 function gitr { git reset $args }
 function gitrh { git reset --hard $args }
-function gitrm { git rebase main }
+function gitrm { git rebase ((git symbolic-ref "refs/remotes/$($script:remote ?? 'origin')/HEAD" 2>$null) -replace '^.*/', '') }
 function gitrc { git rebase --continue }
 function gitl { git log }
 
@@ -41,6 +41,6 @@ function gpf { gp --force-with-lease }
 $autoNvmScript = "$HOME\.dotfiles\scripts\powershell\auto-nvm.ps1"
 if (Test-Path -LiteralPath $autoNvmScript) {
     . $autoNvmScript
-    Invoke-AutoNodeVersion
+    nvmup
 }
 

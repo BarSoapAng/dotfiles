@@ -12,19 +12,22 @@ alias lint="npx eslint --fix"
 
 # Git branches
 alias gitc="git checkout"
-alias gitcm="git checkout main"
+function gitcm () { # Git checkout <default_branch>
+    git checkout "$(git symbolic-ref refs/remotes/${remote:-origin}/HEAD | sed 's,.*/,,')"
+}
 alias gitb="git branch"
 alias gitbd="git branch -D"
 alias gitcb="git checkout -b"
 alias gitr="git reset"
 alias gitrh="git reset --hard"
-alias gitrm="git rebase main"
+function gitrm () { # Git rebase <default_branch>
+    git rebase "$(git symbolic-ref refs/remotes/${remote:-origin}/HEAD | sed 's,.*/,,')"
+}
 alias gitrc="git rebase --continue"
 alias gitl="git log"
 
 # Git changes
 alias gitp="git pull"
-alias gitpm="git checkout main && git pull"
 alias gs="git status"
 alias ga="git add"
 alias gaa="git add ."

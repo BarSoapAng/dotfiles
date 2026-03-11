@@ -1,5 +1,6 @@
 # auto-nvm.ps1
-function Invoke-AutoNodeVersion {
+# This is AI generated and NOT checked for correctness! The bash script is ideal
+function nvmup {
     if (-not (Get-Command nvm -ErrorAction SilentlyContinue)) {
         return
     }
