@@ -10,9 +10,12 @@ autoload_nvmrc() {
   required="$(tr -d '[:space:]' < "$nvmrc")"
   current="$(nvm current)"
 
-  if [ "$current" != "$required" ]; then
-    nvm install "$required" >/dev/null
+  if [ "$current" != "v$required" ]; then
+    if ! nvm list | grep -Eq "(^|[[:space:]])v?$required([[:space:]]|$)"; then
+      nvm install "$required"
+    fi
+
     nvm use "$required" >/dev/null
-    echo "Switched Node to $(nvm current) (from $nvmrc)"
+    echo "Using Node to $(nvm current)"
   fi
 }
