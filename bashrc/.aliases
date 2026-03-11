@@ -1,5 +1,5 @@
 # Dotfile Setup
-alias dotfiles='git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME'
+alias dotfile='git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME'
 
 # Navigation
 alias b="cd .."
