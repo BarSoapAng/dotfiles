@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-autoload_nvmrc() {
+nvmup() {
   command -v nvm >/dev/null 2>&1 || return 0
 
   local nvmrc="$PWD/.nvmrc"
