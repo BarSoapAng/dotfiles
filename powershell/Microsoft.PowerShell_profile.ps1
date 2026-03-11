@@ -1,7 +1,10 @@
+# Dotfile setup
+function dotfiles { & git --git-dir="$HOME/.dotfiles/.git" --work-tree="$HOME" @args }
+
 # Navigation
 function b { Set-Location .. }
 function home { Set-Location ~ }
-function oa { notepad "$HOME\.aliases.ps1" }
+function oa { notepad "$HOME\.dotfiles\powershell\.aliases.ps1" }
 function sz { . $PROFILE }
 
 # Linting
@@ -35,8 +38,9 @@ function gp {
 }
 function gpf { gp --force-with-lease }
 
-$autoNvmScript = "$HOME\scripts\powershell\auto-nvm.ps1"
+$autoNvmScript = "$HOME\.dotfiles\scripts\powershell\auto-nvm.ps1"
 if (Test-Path -LiteralPath $autoNvmScript) {
     . $autoNvmScript
     Invoke-AutoNodeVersion
 }
+

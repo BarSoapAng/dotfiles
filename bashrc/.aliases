@@ -1,8 +1,11 @@
+# Dotfile Setup
+alias dotfiles='git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME'
+
 # Navigation
 alias b="cd .."
 alias home="cd ~"
-alias oa="notepad ~/.aliases"
-alias sz="source ~/.bashrc"
+alias oa="notepad ~/.dotfiles/bashrc/.aliases"
+alias sz="source ~/.dotfiles/bashrc/.bashrc"
 
 # Linting
 alias lint="npx eslint --fix"
