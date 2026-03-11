@@ -1,5 +1,5 @@
 # Dotfile setup
-function dotfiles { & git --git-dir="$HOME/.dotfiles/.git" --work-tree="$HOME" @args }
+# function dotfiles { & git --git-dir="$HOME/.dotfiles/.git" @args }
 
 # Navigation
 function b { Set-Location .. }
@@ -12,13 +12,23 @@ function lint { npx eslint --fix $args }
 
 # Git branches
 function gitc { git checkout $args }
-function gitcm { git checkout ((git symbolic-ref "refs/remotes/$($script:remote ?? 'origin')/HEAD" 2>$null) -replace '^.*/', '') }
+function gitcm {
+  $r = if ($script:remote) { $script:remote } else { 'origin' }
+  $head = git symbolic-ref "refs/remotes/$r/HEAD" 2>$null
+  $branch = $head -replace '^.*/', ''
+  git checkout $branch @args
+}
 function gitb { git branch }
 function gitbd { git branch -D $args }
 function gitcb { git checkout -b $args }
 function gitr { git reset $args }
 function gitrh { git reset --hard $args }
-function gitrm { git rebase ((git symbolic-ref "refs/remotes/$($script:remote ?? 'origin')/HEAD" 2>$null) -replace '^.*/', '') }
+function gitrm {
+  $r = if ($script:remote) { $script:remote } else { 'origin' }
+  $head = git symbolic-ref "refs/remotes/$r/HEAD" 2>$null
+  $branch = $head -replace '^.*/', ''
+  git rebase $branch
+}
 function gitrc { git rebase --continue }
 function gitl { git log }
 

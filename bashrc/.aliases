@@ -1,5 +1,5 @@
 # Dotfile Setup
-alias dotfiles='git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME'
+# alias dotfiles='git --git-dir=$HOME/.dotfiles/.git'
 
 # Navigation
 alias b="cd .."
@@ -13,7 +13,7 @@ alias lint="npx eslint --fix"
 # Git branches
 alias gitc="git checkout"
 function gitcm () { # Git checkout <default_branch>
-    git checkout "$(git symbolic-ref refs/remotes/${remote:-origin}/HEAD | sed 's,.*/,,')"
+    git checkout "$(git symbolic-ref refs/remotes/${remote:-origin}/HEAD | sed 's,.*/,,')" "$@"
 }
 alias gitb="git branch"
 alias gitbd="git branch -D"
