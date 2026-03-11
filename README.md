@@ -76,3 +76,8 @@ function gp () { # git push -u origin <branch>
 }
 gpf="gp --force-with-lease"
 ```
+
+### Other
+```bash
+nvmup # Updates nvm using .nvmrc in current directory
+```
