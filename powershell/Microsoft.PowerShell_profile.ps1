@@ -1,5 +1,5 @@
 # Dotfile setup
-function dotfile { & git --git-dir="$HOME/.dotfiles/.git" --work-tree="$HOME" @args }
+function dotfiles { & git --git-dir="$HOME/.dotfiles/.git" --work-tree="$HOME" @args }
 
 # Navigation
 function b { Set-Location .. }
