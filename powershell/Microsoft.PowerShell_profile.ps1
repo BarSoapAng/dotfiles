@@ -34,3 +34,9 @@ function gp {
     git push origin $branch $args
 }
 function gpf { gp --force-with-lease }
+
+$autoNvmScript = "$HOME\scripts\powershell\auto-nvm.ps1"
+if (Test-Path -LiteralPath $autoNvmScript) {
+    . $autoNvmScript
+    Invoke-AutoNodeVersion
+}
