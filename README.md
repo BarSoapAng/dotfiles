@@ -30,3 +30,49 @@ Check the contents of `$PROFILE`:
 ```bash
 notepad $PROFILE
 ```
+
+## Commands
+
+### Navigation
+```bash
+b="cd .."
+home="cd ~"
+oa="notepad ~/.dotfiles/bashrc/.aliases"
+sz="source ~/.bashrc"
+```
+
+### Linting
+```bash
+lint="npx eslint --fix"
+```
+
+### Git branch management
+```bash
+gitc="git checkout"
+gitcm="git checkout main"
+gitb="git branch"
+gitbd="git branch -D"
+gitcb="git checkout -b"
+gitr="git reset"
+gitrh="git reset --hard"
+gitrm="git rebase main"
+gitrc="git rebase --continue"
+gitl="git log"
+```
+
+### Git changes
+```bash
+gitp="git pull"
+gitpm="git checkout main && git pull"
+gs="git status"
+ga="git add"
+gaa="git add ."
+grs="git restore --staged"
+gc="git commit -m"
+gac="git commit -am"
+gaac="git add . && git commit -m"
+function gp () { # git push -u origin <branch>
+    git push origin $(git branch --show-current) "$@"
+}
+gpf="gp --force-with-lease"
+```
