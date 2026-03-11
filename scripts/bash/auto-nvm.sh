@@ -10,7 +10,7 @@ nvmup() {
   required="$(tr -d '[:space:]' < "$nvmrc")"
   current="$(nvm current)"
 
-  if [ "$current" != "v$required" ]; then
+  if [ "$current" != "$required" ]; then
     if ! nvm list | grep -Eq "(^|[[:space:]])v?$required([[:space:]]|$)"; then
       nvm install "$required"
     fi
