@@ -4,8 +4,14 @@
 # Navigation
 alias b="cd .."
 alias home="cd ~"
+function cdwt () { # cd into centralized worktree by name
+    local tree="$1"
+    [ -n "$tree" ] || return 1
+    cd "C:/Users/Angela/Documents/Projects/.worktrees/$tree" || return 1
+}
 alias oa="notepad ~/.dotfiles/bashrc/.aliases"
 alias sz="source ~/.bashrc"
+
 
 # Linting
 alias lint="npx eslint --fix"
@@ -39,3 +45,36 @@ function gp () {
     git push origin $(git branch --show-current) "$@"
 }
 alias gpf="gp --force-with-lease"
+
+# Git worktrees
+function gitwc () { # Create worktree + create/check out local branch <worktree-name>
+    local tree="$1"
+    local worktree_path="C:/Users/Angela/Documents/Projects/.worktrees/$tree"
+
+    [ -n "$tree" ] || return 1
+
+    git worktree add -b "$tree" "$worktree_path"
+}
+
+function gitwr () { # Remove worktree dir + delete matching local branch
+    local tree="$1"
+    local branch=""
+    local worktree_path="C:/Users/Angela/Documents/Projects/.worktrees/$tree"	# Hardcoded centralized git worktree location
+
+    [ -n "$tree" ] || return 1
+
+    if git show-ref --verify --quiet "refs/heads/$tree"; then
+        branch="$tree"
+    else
+        local matches
+        matches="$(git for-each-ref --format='%(refname:short)' refs/heads | awk -v n="$tree" -F/ '$NF==n')"
+
+        local count
+        count="$(printf '%s\n' "$matches" | sed '/^$/d' | wc -l | tr -d ' ')"
+
+        [ "$count" -eq 1 ] || return 1
+        branch="$matches"
+    fi
+
+    rm -rf "$worktree_path" && git worktree prune --expire now && git branch -d "$branch"
+}
