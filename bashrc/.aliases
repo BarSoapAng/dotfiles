@@ -4,11 +4,16 @@
 # Navigation
 alias b="cd .."
 alias home="cd ~"
-function cdwt () { # cd into centralized worktree by name
-    local tree="$1"
-    [ -n "$tree" ] || return 1
-    cd "C:/Users/Angela/Documents/Projects/.worktrees/$tree" || return 1
+cdwt () { # cd into centralized worktree by name, or default location
+    local base="C:/Users/Angela/Documents/Projects/.worktrees"
+
+    if [ -n "$1" ]; then
+        cd "$base/$1" || return 1
+    else
+        cd "$base" || return 1
+    fi
 }
+
 alias oa="notepad ~/.dotfiles/bashrc/.aliases"
 alias sz="source ~/.bashrc"
 
@@ -78,3 +83,6 @@ function gitwr () { # Remove worktree dir + delete matching local branch
 
     rm -rf "$worktree_path" && git worktree prune --expire now && git branch -d "$branch"
 }
+
+# Agents :3
+alias agentgc='GIT_AUTHOR_NAME="soapyang" GIT_COMMITTER_NAME="soapyang" git commit'
