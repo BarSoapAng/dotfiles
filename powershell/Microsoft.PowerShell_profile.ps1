@@ -4,7 +4,7 @@
 # Navigation
 function b { Set-Location .. }
 function home { Set-Location ~ }
-function oa { notepad "$HOME\.dotfiles\powershell\.aliases.ps1" }
+function oa { notepad "$HOME\.dotfiles\powershell\Microsoft.PowerShell_profile.ps1" }
 function sz { . $PROFILE }
 
 # Linting
@@ -54,3 +54,9 @@ if (Test-Path -LiteralPath $autoNvmScript) {
     nvmup
 }
 
+# For agents :3
+function agentgc {
+  $env:GIT_AUTHOR_NAME = "soapyang"
+  $env:GIT_COMMITTER_NAME = "soapyang"
+  git commit @args
+}

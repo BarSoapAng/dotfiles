@@ -81,7 +81,7 @@ function gitwr () { # Remove worktree dir + delete matching local branch
         branch="$matches"
     fi
 
-    rm -rf "$worktree_path" && git worktree prune --expire now && git branch -d "$branch"
+    rm -rf "$worktree_path" && git worktree prune --expire now && git branch -D "$branch"
 }
 
 # Agents :3
