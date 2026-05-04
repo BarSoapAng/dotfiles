@@ -19,6 +19,18 @@ Check the contents of `.bashrc`:
 code ~/.bashrc
 ```
 
+Zsh setup:
+
+```bash
+echo '[ -f ~/.dotfiles/zshrc/.aliases ] && source ~/.dotfiles/zshrc/.aliases' >> "$HOME/.zshrc" # Sources the zsh aliases file
+source "$HOME/.zshrc"
+```
+
+Check the contents of `.zshrc`:
+```bash
+code ~/.zshrc
+```
+
 Powershell setup:
 
 ```powershell

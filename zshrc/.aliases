@@ -1,37 +1,88 @@
+# Dotfile Setup
+# alias dotfiles='git --git-dir=$HOME/.dotfiles/.git'
+
 # Navigation
 alias b="cd .."
 alias home="cd ~"
-alias oa="open ~/.aliases"
-alias sz="source ~/.zshrc"
+cdwt () { # cd into centralized worktree by name, or default location
+    local base="C:/Users/Angela/Documents/Projects/.worktrees"
+
+    if [ -n "$1" ]; then
+        cd "$base/$1" || return 1
+    else
+        cd "$base" || return 1
+    fi
+}
+
+alias oa="notepad ~/.dotfiles/bashrc/.aliases"
+alias sz="source ~/.bashrc"
+
 
 # Linting
 alias lint="npx eslint --fix"
 
 # Git branches
 alias gitc="git checkout"
-alias gitcm="git checkout main"
+function gitcm () { # Git checkout <default_branch>
+    git checkout "$(git symbolic-ref refs/remotes/${remote:-origin}/HEAD | sed 's,.*/,,')" "$@"
+}
 alias gitb="git branch"
 alias gitbd="git branch -D"
 alias gitcb="git checkout -b"
 alias gitr="git reset"
 alias gitrh="git reset --hard"
-
-alias gitrm="git rebase main"
+function gitrm () { # Git rebase <default_branch>
+    git rebase "$(git symbolic-ref refs/remotes/${remote:-origin}/HEAD | sed 's,.*/,,')"
+}
 alias gitrc="git rebase --continue"
-
 alias gitl="git log"
 
 # Git changes
 alias gitp="git pull"
-alias gitpm="git checkout main && git pull" 
-
 alias gs="git status"
 alias ga="git add"
 alias gaa="git add ."
 alias grs="git restore --staged"
 alias gc="git commit -m"
-alias gac="git commit -am" 
+alias gac="git commit -am"
 alias gaac="git add . && git commit -m"
-
-function gp () { git push origin $(git branch --show-current) $@; }
+function gp () {
+    git push origin $(git branch --show-current) "$@"
+}
 alias gpf="gp --force-with-lease"
+
+# Git worktrees
+function gitwc () { # Create worktree + create/check out local branch <worktree-name>
+    local tree="$1"
+    local worktree_path="C:/Users/Angela/Documents/Projects/.worktrees/$tree"
+
+    [ -n "$tree" ] || return 1
+
+    git worktree add -b "$tree" "$worktree_path"
+}
+
+function gitwr () { # Remove worktree dir + delete matching local branch
+    local tree="$1"
+    local branch=""
+    local worktree_path="C:/Users/Angela/Documents/Projects/.worktrees/$tree"	# Hardcoded centralized git worktree location
+
+    [ -n "$tree" ] || return 1
+
+    if git show-ref --verify --quiet "refs/heads/$tree"; then
+        branch="$tree"
+    else
+        local matches
+        matches="$(git for-each-ref --format='%(refname:short)' refs/heads | awk -v n="$tree" -F/ '$NF==n')"
+
+        local count
+        count="$(printf '%s\n' "$matches" | sed '/^$/d' | wc -l | tr -d ' ')"
+
+        [ "$count" -eq 1 ] || return 1
+        branch="$matches"
+    fi
+
+    rm -rf "$worktree_path" && git worktree prune --expire now && git branch -D "$branch"
+}
+
+# Agents :3
+alias agentgc='GIT_AUTHOR_NAME="soapyang" GIT_COMMITTER_NAME="soapyang" git commit'
