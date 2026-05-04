@@ -28,7 +28,7 @@ source "$HOME/.zshrc"
 
 Check the contents of `.zshrc`:
 ```bash
-code ~/.zshrc
+open ~/.zshrc
 ```
 
 Powershell setup:
