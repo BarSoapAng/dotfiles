@@ -2,10 +2,38 @@
 # function dotfiles { & git --git-dir="$HOME/.dotfiles/.git" @args }
 
 # Navigation
+function Open-DotfilePath {
+  param([Parameter(Mandatory = $true)][string]$Path)
+  Invoke-Item -LiteralPath $Path
+}
+
 function b { Set-Location .. }
 function home { Set-Location ~ }
+function od { Open-DotfilePath "$HOME\.dotfiles" }
 function oa { notepad "$HOME\.dotfiles\powershell\Microsoft.PowerShell_profile.ps1" }
 function sz { . $PROFILE }
+function dotp {
+  if ($args.Count -eq 0) {
+    Write-Error "Usage: dotp <commit message>"
+    return
+  }
+
+  $message = $args -join ' '
+
+  Push-Location "$HOME\.dotfiles"
+  try {
+    git add .
+    if ($LASTEXITCODE -ne 0) { return }
+
+    git commit -m $message
+    if ($LASTEXITCODE -ne 0) { return }
+
+    git push
+  }
+  finally {
+    Pop-Location
+  }
+}
 
 # Linting
 function lint { npx eslint --fix $args }
